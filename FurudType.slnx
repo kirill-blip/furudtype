@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/FurudType.Core/FurudType.Core.csproj" />
+  <Project Path="src/FurudType.App/FurudType.App.csproj" />
+</Solution>
