@@ -6,5 +6,6 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://FurudType.App/Styles/AppDefaultStyles.axaml"></StyleInclude>
     </Application.Styles>
 </Application>

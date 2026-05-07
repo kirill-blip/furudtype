@@ -8,7 +8,7 @@ namespace FurudType.App.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string? _textToDisplay;
+    private string? _textToDisplay = string.Empty;
 
     [RelayCommand]
     private void HandleTextInputCommand(TextInputEventArgs e)
