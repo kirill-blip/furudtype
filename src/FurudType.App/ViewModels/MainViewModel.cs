@@ -11,7 +11,7 @@ public partial class MainViewModel : ObservableObject
     private string? _textToDisplay = string.Empty;
 
     [RelayCommand]
-    private void HandleTextInputCommand(TextInputEventArgs e)
+    private void HandleTextInput(TextInputEventArgs e)
     {
         TextToDisplay += e.Text;
     }

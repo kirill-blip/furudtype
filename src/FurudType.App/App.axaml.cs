@@ -5,7 +5,7 @@ using FurudType.App.Views;
 
 namespace FurudType.App;
 
-public class App : Application
+public partial class App : Application
 {
     public override void Initialize()
     {

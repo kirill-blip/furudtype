@@ -4,17 +4,19 @@
         xmlns:vm="clr-namespace:FurudType.App.ViewModels"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+        xmlns:i="using:Avalonia.Xaml.Interactivity"
+        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FurudType.App.Views.MainView"
         x:DataType="vm:MainViewModel"
         Title="FurudType"
         Focusable="True">
-    <Interaction.Behaviors>
-        <EventTriggerBehavior EventName="TextInput">
-            <InvokeCommandAction Command="{Binding HandleTextInputCommandCommand}"
-                                 PassEventArgsToCommand="True" />
-        </EventTriggerBehavior>
-    </Interaction.Behaviors>
+    <i:Interaction.Behaviors>
+        <ia:EventTriggerBehavior EventName="TextInput">
+            <ia:InvokeCommandAction Command="{Binding HandleTextInputCommand}"
+                                    PassEventArgsToCommand="True" />
+        </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
     <Grid RowDefinitions="Auto,*"
           ColumnDefinitions="Auto,*">
         <Border Grid.Row="0"
@@ -69,10 +71,10 @@
                 BorderBrush="Black"
                 BorderThickness="0,0,1,0">
             <StackPanel>
-                <TextBlock>
-                    <avalonia:FluentIcon Icon="Board" VerticalAlignment="Center"/>
-                    Dashboard
-                </TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <avalonia:FluentIcon Icon="Board" VerticalAlignment="Center" />
+                    <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                </StackPanel>
 
                 <Label Content="Lessons" />
             </StackPanel>
