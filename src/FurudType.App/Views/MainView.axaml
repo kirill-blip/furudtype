@@ -54,7 +54,7 @@
                         Background="Transparent"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        AutomationProperties.Name="Profile"
+                        AutomationProperties.Name="Settings"
                         ToolTip.Tip="Settings">
                     <avalonia:FluentIcon Icon="Settings" />
                 </Button>
