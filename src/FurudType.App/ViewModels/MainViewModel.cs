@@ -1,4 +1,6 @@
-﻿using Avalonia.Input;
+﻿using System;
+
+using Avalonia.Input;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -8,11 +10,39 @@ namespace FurudType.App.ViewModels;
 public partial class MainViewModel : ObservableObject
 {
     [ObservableProperty]
-    private string? _textToDisplay;
+    private string? _targetText = "Hello World";
+
+    [ObservableProperty]
+    private int _errorsCount;
+
+    [ObservableProperty]
+    private int _correctCount;
+
+    private int _currentIndex;
 
     [RelayCommand]
     private void HandleTextInput(TextInputEventArgs e)
     {
-        TextToDisplay += e.Text;
+        if (string.IsNullOrEmpty(e.Text) || string.IsNullOrEmpty(_targetText))
+        {
+            return;
+        }
+
+        if (_currentIndex >= _targetText.Length)
+        {
+            return;
+        }
+
+        if (_targetText[_currentIndex].ToString() != e.Text)
+        {
+            Console.WriteLine(e.Text);
+            ErrorsCount++;
+        }
+        else
+        {
+            CorrectCount++;
+        }
+
+        _currentIndex++;
     }
 }

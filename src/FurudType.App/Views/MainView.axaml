@@ -24,33 +24,45 @@
                 Padding="5"
                 BorderBrush="Black"
                 BorderThickness="0,0,0,1">
-            <Grid ColumnDefinitions="*,80,80,80,*,50,50">
-                <TextBlock Grid.Column="0"
+            <Grid ColumnDefinitions="*,80,80,80,*,50,50" RowDefinitions="*,*">
+                <TextBlock Grid.Row="0" Grid.Column="0"
                            Text="FurudType"
                            FontWeight="Bold"
                            FontSize="16"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center" />
 
-                <TextBlock Grid.Column="1"
+                <TextBlock Grid.Row="0" Grid.Column="1"
                            Text="SPEED"
                            FontSize="14"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
 
-                <TextBlock Grid.Column="2"
+                <TextBlock Grid.Row="0" Grid.Column="2"
                            FontSize="14"
-                           Text="ACCURACY"
+                           Text="Correct"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
 
-                <TextBlock Grid.Column="3"
+                <TextBlock Grid.Row="1" Grid.Column="2"
+                           FontSize="14"
+                           Text="{Binding CorrectCount}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center" />
+
+                <TextBlock Grid.Row="0" Grid.Column="3"
                            FontSize="14"
                            Text="ERRORS"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center" />
 
-                <Button Grid.Column="5"
+                <TextBlock Grid.Row="1" Grid.Column="3"
+                           FontSize="14"
+                           Text="{Binding ErrorsCount}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+
+                <Button Grid.Row="0" Grid.Column="5"
                         Background="Transparent"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
@@ -59,7 +71,7 @@
                     <avalonia:FluentIcon Icon="Settings" />
                 </Button>
 
-                <Button Grid.Column="6"
+                <Button Grid.Row="0" Grid.Column="6"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Background="Transparent"
@@ -86,7 +98,7 @@
         <Border Grid.Row="1"
                 Grid.Column="1">
             <StackPanel>
-                <Label Classes="text" Content="{Binding TextToDisplay}" />
+                <Label Classes="text" Content="{Binding TargetText}" />
                 <Border BorderBrush="Black" BorderThickness="0,1,0,0">
                     <Label Content="Here will be keyboard" />
                 </Border>
