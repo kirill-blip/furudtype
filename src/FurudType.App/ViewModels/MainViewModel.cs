@@ -33,16 +33,23 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        if (_targetText[_currentIndex].ToString() != e.Text)
+        foreach (char inputChar in e.Text)
         {
-            Console.WriteLine(e.Text);
-            ErrorsCount++;
-        }
-        else
-        {
-            CorrectCount++;
-        }
+            if (_currentIndex >= _targetText.Length)
+            {
+                break;
+            }
 
-        _currentIndex++;
+            if (_targetText[_currentIndex] != inputChar)
+            {
+                ErrorsCount++;
+            }
+            else
+            {
+                CorrectCount++;
+            }
+
+            _currentIndex++;
+        }
     }
 }
