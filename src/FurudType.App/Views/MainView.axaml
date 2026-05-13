@@ -60,7 +60,7 @@
                            FontSize="14"
                            Text="{Binding ErrorsCount}"
                            HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+                           VerticalAlignment="Center" />
 
                 <Button Grid.Row="0" Grid.Column="5"
                         Background="Transparent"
@@ -98,10 +98,33 @@
         <Border Grid.Row="1"
                 Grid.Column="1">
             <StackPanel>
-                <Label Classes="text" Content="{Binding TargetText}" />
-                <Border BorderBrush="Black" BorderThickness="0,1,0,0">
-                    <Label Content="Here will be keyboard" />
+                <Border BorderBrush="Black"
+                        BorderThickness="0,0,0,1">
+                    <StackPanel Margin="10">
+                        <ItemsControl ItemsSource="{Binding Characters}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="vm:CharacterViewModel">
+                                    <Border BorderBrush="Black"
+                                            BorderThickness="1"
+                                            Height="40"
+                                            Width="40">
+                                        <TextBlock Text="{Binding Character}"
+                                                   FontSize="24"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
                 </Border>
+
+                <Label Classes="text" Content="Here will be keyboard" />
             </StackPanel>
         </Border>
     </Grid>
