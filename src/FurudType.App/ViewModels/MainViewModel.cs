@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
 
 using Avalonia.Input;
 
@@ -7,8 +7,11 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace FurudType.App.ViewModels;
 
-public partial class MainViewModel : ObservableObject
+public partial class MainViewModel : ViewModelBase
 {
+    [ObservableProperty]
+    private ObservableCollection<CharacterViewModel> _characters = [];
+
     [ObservableProperty]
     private string? _targetText = "Hello World";
 
@@ -20,6 +23,18 @@ public partial class MainViewModel : ObservableObject
 
     private int _currentIndex;
 
+    public MainViewModel()
+    {
+        foreach (char character in _targetText)
+        {
+            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
+
+            Characters.Add(characterViewModel);
+        }
+
+        Characters[0].IsCurrent = true;
+    }
+
     [RelayCommand]
     private void HandleTextInput(TextInputEventArgs e)
     {
@@ -28,28 +43,36 @@ public partial class MainViewModel : ObservableObject
             return;
         }
 
-        if (_currentIndex >= _targetText.Length)
+        if (_currentIndex >= Characters.Count)
         {
             return;
         }
 
         foreach (char inputChar in e.Text)
         {
-            if (_currentIndex >= _targetText.Length)
+            if (_currentIndex >= Characters.Count)
             {
                 break;
             }
 
-            if (_targetText[_currentIndex] != inputChar)
+            if (Characters[_currentIndex].Character != inputChar)
             {
                 ErrorsCount++;
+                Characters[_currentIndex].IsCorrect = false;
             }
             else
             {
                 CorrectCount++;
+                Characters[_currentIndex].IsCorrect = true;
             }
 
+            Characters[_currentIndex].IsCurrent = false;
             _currentIndex++;
+
+            if (_currentIndex >= Characters.Count)
+            {
+                Characters[^1].IsCurrent = true;
+            }
         }
     }
 }
