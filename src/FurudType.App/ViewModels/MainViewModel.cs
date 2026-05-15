@@ -58,10 +58,12 @@ public partial class MainViewModel : ViewModelBase
             if (Characters[_currentIndex].Character != inputChar)
             {
                 ErrorsCount++;
+                Characters[_currentIndex].IsCorrect = false;
             }
             else
             {
                 CorrectCount++;
+                Characters[_currentIndex].IsCorrect = true;
             }
 
             Characters[_currentIndex].IsCurrent = false;
