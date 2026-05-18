@@ -55,6 +55,17 @@ public partial class MainViewModel : ViewModelBase
                 break;
             }
 
+            if (inputChar == ' ' && Characters[_currentIndex].Character != ' ')
+            {
+                continue;
+            }
+
+            if (inputChar == ' ' && Characters[_currentIndex].Character == ' ')
+            {
+                _currentIndex++;
+                continue;
+            }
+
             if (Characters[_currentIndex].Character != inputChar)
             {
                 ErrorsCount++;
@@ -63,6 +74,7 @@ public partial class MainViewModel : ViewModelBase
             else
             {
                 CorrectCount++;
+
                 Characters[_currentIndex].IsCorrect = true;
             }
 
