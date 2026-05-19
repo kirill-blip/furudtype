@@ -6,6 +6,7 @@
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
     <Application.Resources>
         <conv:IsCorrectToBrushConverter x:Key="IsCorrectToBrushConverter" />
+        <conv:CursorVisibilityConverter x:Key="CursorVisibilityConverter" />
     </Application.Resources>
 
     <Application.Styles>

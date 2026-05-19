@@ -114,6 +114,7 @@
                                             Height="40"
                                             Width="40">
                                         <TextBlock Text="{Binding Character}"
+                                                   TextDecorations="{Binding IsCurrent, Converter={StaticResource CursorVisibilityConverter}}"
                                                    Foreground="{Binding IsCorrect, Converter={StaticResource IsCorrectToBrushConverter}}"
                                                    FontSize="24"
                                                    HorizontalAlignment="Center"
