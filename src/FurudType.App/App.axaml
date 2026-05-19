@@ -1,8 +1,13 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:conv="clr-namespace:FurudType.App.Converters"
              x:Class="FurudType.App.App"
              RequestedThemeVariant="Light">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <Application.Resources>
+        <conv:IsCorrectToBrushConverter x:Key="IsCorrectToBrushConverter" />
+        <conv:CursorVisibilityConverter x:Key="CursorVisibilityConverter" />
+    </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />
