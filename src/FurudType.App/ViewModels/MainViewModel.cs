@@ -62,8 +62,20 @@ public partial class MainViewModel : ViewModelBase
 
             if (inputChar == ' ' && Characters[_currentIndex].Character == ' ')
             {
+                Characters[_currentIndex].IsCurrent = false;
+                Characters[_currentIndex].IsCorrect = true;
+
                 _currentIndex++;
-                Characters[_currentIndex].IsCurrent = true;
+
+                if (_currentIndex >= Characters.Count)
+                {
+                    Characters[^1].IsCurrent = true;
+                }
+                else
+                {
+                    Characters[_currentIndex].IsCurrent = true;
+                }
+
                 continue;
             }
 

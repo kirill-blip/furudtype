@@ -108,7 +108,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate DataType="vm:CharacterViewModel">
+                                <DataTemplate x:DataType="vm:CharacterViewModel">
                                     <Border BorderBrush="Black"
                                             BorderThickness="1"
                                             Height="40"
