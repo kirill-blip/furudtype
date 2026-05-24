@@ -1,5 +1,8 @@
-﻿using Avalonia;
-using System;
+﻿using System;
+
+using Avalonia;
+
+using HotAvalonia;
 
 namespace FurudType.App;
 
@@ -13,9 +16,9 @@ class Program
         .StartWithClassicDesktopLifetime(args);
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .WithInterFont()
-            .LogToTrace();
+    [AvaloniaHotReload]
+    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
+        .UsePlatformDetect()
+        .WithInterFont()
+        .LogToTrace();
 }
