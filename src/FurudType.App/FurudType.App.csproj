@@ -28,4 +28,8 @@
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FurudType.Core\FurudType.Core.csproj" />
+  </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@ using Avalonia.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+using FurudType.Core.Models;
+
 namespace FurudType.App.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
@@ -13,7 +15,7 @@ public partial class MainViewModel : ViewModelBase
     private ObservableCollection<CharacterViewModel> _characters = [];
 
     [ObservableProperty]
-    private string? _targetText = "Hello World";
+    private Lesson _lesson;
 
     [ObservableProperty]
     private int _errorsCount;
@@ -25,7 +27,25 @@ public partial class MainViewModel : ViewModelBase
 
     public MainViewModel()
     {
-        foreach (char character in _targetText)
+        Exercise firstExercise = new Exercise()
+        {
+            Title = "First",
+            Text = "ffjj jfjf fjjf",
+        };
+
+        Exercise secondExercise = new Exercise()
+        {
+            Title = "Second",
+            Text = "ddkk dkdk dkkd",
+        };
+
+        Lesson = new Lesson()
+        {
+            Title = "Middle line",
+            Exercises = { firstExercise, secondExercise },
+        };
+
+        foreach (char character in Lesson.Exercises[0].Text)
         {
             CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
 
@@ -38,7 +58,7 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private void HandleTextInput(TextInputEventArgs e)
     {
-        if (string.IsNullOrEmpty(e.Text) || string.IsNullOrEmpty(_targetText))
+        if (string.IsNullOrEmpty(e.Text))
         {
             return;
         }
@@ -103,5 +123,27 @@ public partial class MainViewModel : ViewModelBase
                 Characters[_currentIndex].IsCurrent = true;
             }
         }
+
+        if (_currentIndex == Characters.Count)
+        {
+            ChangeToNextExercise();
+        }
+    }
+
+    private void ChangeToNextExercise()
+    {
+        Characters.Clear();
+        _currentIndex = 0;
+        CorrectCount = 0;
+        ErrorsCount = 0;
+
+        foreach (char character in Lesson.Exercises[1].Text)
+        {
+            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
+
+            Characters.Add(characterViewModel);
+        }
+
+        Characters[0].IsCurrent = true;
     }
 }

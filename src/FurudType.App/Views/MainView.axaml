@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+        xmlns:models="clr-namespace:FurudType.Core.Models;assembly=FurudType.Core"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
@@ -87,12 +88,18 @@
                 BorderBrush="Black"
                 BorderThickness="0,0,1,0">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <avalonia:FluentIcon Icon="Board" VerticalAlignment="Center" />
-                    <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                <StackPanel Margin="5">
+                    <Label Content="Lessons"  FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{Binding Lesson.Exercises}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Exercise">
+                                <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
+                                    <Button Content="{Binding Title}" HorizontalAlignment="Stretch" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
-
-                <Label Content="Lessons" />
             </StackPanel>
         </Border>
         <Border Grid.Row="1"
