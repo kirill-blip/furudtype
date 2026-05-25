@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Avalonia;
+using Avalonia.Controls;
 
 using HotAvalonia;
 
@@ -16,9 +17,18 @@ class Program
         .StartWithClassicDesktopLifetime(args);
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    [AvaloniaHotReload]
-    public static AppBuilder BuildAvaloniaApp() => AppBuilder.Configure<App>()
+    public static AppBuilder BuildAvaloniaApp()
+    {
+        AppBuilder app = AppBuilder.Configure<App>()
         .UsePlatformDetect()
         .WithInterFont()
         .LogToTrace();
+
+        if (!Design.IsDesignMode)
+        {
+            app.UseHotReload();
+        }
+
+        return app;
+    }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 
 using Avalonia.Input;
 
@@ -128,6 +129,24 @@ public partial class MainViewModel : ViewModelBase
         {
             ChangeToNextExercise();
         }
+    }
+
+    [RelayCommand]
+    private void ChangeLesson(Exercise exercise)
+    {
+        Characters.Clear();
+        _currentIndex = 0;
+        CorrectCount = 0;
+        ErrorsCount = 0;
+
+        foreach (char character in exercise.Text)
+        {
+            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
+
+            Characters.Add(characterViewModel);
+        }
+
+        Characters[0].IsCurrent = true;
     }
 
     private void ChangeToNextExercise()
