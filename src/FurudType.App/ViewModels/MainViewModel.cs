@@ -24,6 +24,11 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private int _correctCount;
 
+    [ObservableProperty]
+    private bool _isExerciseFinished = false;
+
+    private Exercise _currentExercise;
+
     private int _currentIndex;
 
     public MainViewModel()
@@ -45,6 +50,8 @@ public partial class MainViewModel : ViewModelBase
             Title = "Middle line",
             Exercises = { firstExercise, secondExercise },
         };
+
+        _currentExercise = Lesson.Exercises[0];
 
         foreach (char character in Lesson.Exercises[0].Text)
         {
@@ -127,7 +134,7 @@ public partial class MainViewModel : ViewModelBase
 
         if (_currentIndex == Characters.Count)
         {
-            ChangeToNextExercise();
+            IsExerciseFinished = true;
         }
     }
 
@@ -135,6 +142,9 @@ public partial class MainViewModel : ViewModelBase
     private void ChangeLesson(Exercise exercise)
     {
         Characters.Clear();
+        _currentExercise = exercise;
+
+        IsExerciseFinished = false;
         _currentIndex = 0;
         CorrectCount = 0;
         ErrorsCount = 0;
@@ -149,16 +159,30 @@ public partial class MainViewModel : ViewModelBase
         Characters[0].IsCurrent = true;
     }
 
+    [RelayCommand]
     private void ChangeToNextExercise()
     {
+        int index = Lesson.Exercises.IndexOf(_currentExercise);
+        if (index == Lesson.Exercises.Count - 1)
+        {
+            return;
+        }
+
         Characters.Clear();
+
+        IsExerciseFinished = false;
+        _currentExercise = Lesson.Exercises[index + 1];
         _currentIndex = 0;
         CorrectCount = 0;
         ErrorsCount = 0;
 
-        foreach (char character in Lesson.Exercises[1].Text)
+        foreach (char character in _currentExercise.Text)
         {
-            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
+            CharacterViewModel characterViewModel = new()
+            {
+                Character = character,
+                IsCurrent = false
+            };
 
             Characters.Add(characterViewModel);
         }
