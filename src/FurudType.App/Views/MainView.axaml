@@ -97,7 +97,7 @@
                                 <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
                                     <Button Content="{Binding Title}"
                                             HorizontalAlignment="Stretch"
-                                            Command="{Binding #root.DataContext.ChangeLessonCommand}"
+                                            Command="{Binding #root.DataContext.ChangeExerciseCommand}"
                                             CommandParameter="{Binding .}" />
                                 </Border>
                             </DataTemplate>
@@ -153,8 +153,13 @@
                         <Run Text="{Binding ErrorsCount}" />
                     </TextBlock>
 
-                    <Button Content="Next exercise"
+                    <Button IsVisible="{Binding HasExercises}"
+                            Content="Next exercise"
                             Command="{Binding ChangeToNextExerciseCommand}" />
+
+                    <Button IsVisible="{Binding IsLessonFinished}"
+                            Content="Next lesson"
+                            Command="{Binding ChangeLessonToNextCommand}"/>
                 </StackPanel>
             </StackPanel>
         </Border>

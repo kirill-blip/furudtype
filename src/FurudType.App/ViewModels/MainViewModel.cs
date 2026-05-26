@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 using Avalonia.Input;
@@ -27,6 +28,14 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private bool _isExerciseFinished = false;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(HasExercises))]
+    private bool _isLessonFinished = false;
+
+    public bool HasExercises => !IsLessonFinished;
+
+    private readonly List<Lesson> _lessons = [];
+
     private Exercise _currentExercise;
 
     private int _currentIndex;
@@ -50,6 +59,28 @@ public partial class MainViewModel : ViewModelBase
             Title = "Middle line",
             Exercises = { firstExercise, secondExercise },
         };
+
+        _lessons.Add(Lesson);
+
+        Exercise thirdExercise = new Exercise()
+        {
+            Text = "fdkj dfjk kjdf kjdf",
+            Title = "Third"
+        };
+        Exercise fourthExercise = new Exercise()
+        {
+            Text = "slsl slsl slsl llss",
+            Title = "Fourth"
+        };
+
+        _lessons.Add(new Lesson
+        {
+            Title = "Line",
+            Exercises = {
+                thirdExercise,
+                fourthExercise
+            }
+        });
 
         _currentExercise = Lesson.Exercises[0];
 
@@ -135,11 +166,17 @@ public partial class MainViewModel : ViewModelBase
         if (_currentIndex == Characters.Count)
         {
             IsExerciseFinished = true;
+
+            int index = Lesson.Exercises.IndexOf(_currentExercise);
+            if (index == Lesson.Exercises.Count - 1)
+            {
+                IsLessonFinished = true;
+            }
         }
     }
 
     [RelayCommand]
-    private void ChangeLesson(Exercise exercise)
+    private void ChangeExercise(Exercise exercise)
     {
         Characters.Clear();
         _currentExercise = exercise;
@@ -165,6 +202,7 @@ public partial class MainViewModel : ViewModelBase
         int index = Lesson.Exercises.IndexOf(_currentExercise);
         if (index == Lesson.Exercises.Count - 1)
         {
+            IsLessonFinished = true;
             return;
         }
 
@@ -176,6 +214,39 @@ public partial class MainViewModel : ViewModelBase
         CorrectCount = 0;
         ErrorsCount = 0;
 
+        foreach (char character in _currentExercise.Text)
+        {
+            CharacterViewModel characterViewModel = new()
+            {
+                Character = character,
+                IsCurrent = false
+            };
+
+            Characters.Add(characterViewModel);
+        }
+
+        Characters[0].IsCurrent = true;
+    }
+
+    [RelayCommand]
+    private void ChangeLessonToNext()
+    {
+        int index = _lessons.IndexOf(Lesson);
+        if (index == _lessons.Count - 1)
+        {
+            return;
+        }
+
+        _currentIndex = 0;
+        CorrectCount = 0;
+        ErrorsCount = 0;
+
+        Characters.Clear();
+        IsExerciseFinished = false;
+        IsLessonFinished = false;
+
+        Lesson = _lessons[index + 1];
+        _currentExercise = Lesson.Exercises[0];
         foreach (char character in _currentExercise.Text)
         {
             CharacterViewModel characterViewModel = new()
