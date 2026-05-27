@@ -33,5 +33,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FurudType.Core\FurudType.Core.csproj" />
+    <ProjectReference Include="..\FurudType.Storage\FurudType.Storage.csproj" />
   </ItemGroup>
 </Project>

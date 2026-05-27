@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using FurudType.Core.Models;
+using FurudType.Core.Repositories;
 
 namespace FurudType.App.ViewModels;
 
@@ -40,47 +41,13 @@ public partial class MainViewModel : ViewModelBase
 
     private int _currentIndex;
 
-    public MainViewModel()
+    private readonly ILessonRepository _lessonRepository;
+
+    public MainViewModel(ILessonRepository lessonRepository)
     {
-        Exercise firstExercise = new Exercise()
-        {
-            Title = "First",
-            Text = "ffjj jfjf fjjf",
-        };
-
-        Exercise secondExercise = new Exercise()
-        {
-            Title = "Second",
-            Text = "ddkk dkdk dkkd",
-        };
-
-        Lesson = new Lesson()
-        {
-            Title = "Middle line",
-            Exercises = { firstExercise, secondExercise },
-        };
-
-        _lessons.Add(Lesson);
-
-        Exercise thirdExercise = new Exercise()
-        {
-            Text = "fdkj dfjk kjdf kjdf",
-            Title = "Third"
-        };
-        Exercise fourthExercise = new Exercise()
-        {
-            Text = "slsl slsl slsl llss",
-            Title = "Fourth"
-        };
-
-        _lessons.Add(new Lesson
-        {
-            Title = "Line",
-            Exercises = {
-                thirdExercise,
-                fourthExercise
-            }
-        });
+        _lessonRepository = lessonRepository;
+        _lessons = _lessonRepository.GetAll();
+        Lesson = _lessons[0];
 
         _currentExercise = Lesson.Exercises[0];
 
@@ -116,7 +83,12 @@ public partial class MainViewModel : ViewModelBase
 
             if (inputChar == ' ' && Characters[_currentIndex].Character != ' ')
             {
-                continue;
+                return;
+            }
+
+            if (inputChar != ' ' && Characters[_currentIndex].Character == ' ')
+            {
+                return;
             }
 
             if (inputChar == ' ' && Characters[_currentIndex].Character == ' ')
@@ -182,6 +154,7 @@ public partial class MainViewModel : ViewModelBase
         _currentExercise = exercise;
 
         IsExerciseFinished = false;
+        IsLessonFinished = false;
         _currentIndex = 0;
         CorrectCount = 0;
         ErrorsCount = 0;

@@ -20,9 +20,9 @@ class Program
     public static AppBuilder BuildAvaloniaApp()
     {
         AppBuilder app = AppBuilder.Configure<App>()
-        .UsePlatformDetect()
-        .WithInterFont()
-        .LogToTrace();
+            .UsePlatformDetect()
+            .WithInterFont()
+            .LogToTrace();
 
         if (!Design.IsDesignMode)
         {
