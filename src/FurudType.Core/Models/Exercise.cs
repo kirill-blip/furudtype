@@ -1,6 +1,6 @@
-﻿namespace FurudType.Core;
+﻿namespace FurudType.Core.Models;
 
-public class Lesson
+public class Exercise
 {
     public required string Title { get; set; }
 

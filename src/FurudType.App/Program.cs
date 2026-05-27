@@ -1,5 +1,9 @@
-﻿using Avalonia;
-using System;
+﻿using System;
+
+using Avalonia;
+using Avalonia.Controls;
+
+using HotAvalonia;
 
 namespace FurudType.App;
 
@@ -14,8 +18,17 @@ class Program
 
     // Avalonia configuration, don't remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
+    {
+        AppBuilder app = AppBuilder.Configure<App>()
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();
+
+        if (!Design.IsDesignMode)
+        {
+            app.UseHotReload();
+        }
+
+        return app;
+    }
 }

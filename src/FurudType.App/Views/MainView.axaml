@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+        xmlns:models="clr-namespace:FurudType.Core.Models;assembly=FurudType.Core"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
         xmlns:i="using:Avalonia.Xaml.Interactivity"
@@ -9,6 +10,7 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="FurudType.App.Views.MainView"
         x:DataType="vm:MainViewModel"
+        x:Name="root"
         Title="FurudType"
         Focusable="True">
     <i:Interaction.Behaviors>
@@ -24,62 +26,32 @@
                 Padding="5"
                 BorderBrush="Black"
                 BorderThickness="0,0,0,1">
-            <Grid ColumnDefinitions="*,80,80,80,*,50,50" RowDefinitions="*,*">
-                <TextBlock Grid.Row="0" Grid.Column="0"
-                           Text="FurudType"
+            <DockPanel HorizontalAlignment="Stretch"
+                       LastChildFill="True">
+                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                    <Button Background="Transparent"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            AutomationProperties.Name="Settings"
+                            ToolTip.Tip="Settings">
+                        <avalonia:FluentIcon Icon="Settings" />
+                    </Button>
+
+                    <Button HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            AutomationProperties.Name="Profile"
+                            ToolTip.Tip="Profile">
+                        <avalonia:FluentIcon Icon="Person" />
+                    </Button>
+                </StackPanel>
+
+                <TextBlock Text="FurudType"
                            FontWeight="Bold"
                            FontSize="16"
                            HorizontalAlignment="Left"
                            VerticalAlignment="Center" />
-
-                <TextBlock Grid.Row="0" Grid.Column="1"
-                           Text="SPEED"
-                           FontSize="14"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-
-                <TextBlock Grid.Row="0" Grid.Column="2"
-                           FontSize="14"
-                           Text="Correct"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-
-                <TextBlock Grid.Row="1" Grid.Column="2"
-                           FontSize="14"
-                           Text="{Binding CorrectCount}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-
-                <TextBlock Grid.Row="0" Grid.Column="3"
-                           FontSize="14"
-                           Text="ERRORS"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-
-                <TextBlock Grid.Row="1" Grid.Column="3"
-                           FontSize="14"
-                           Text="{Binding ErrorsCount}"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center" />
-
-                <Button Grid.Row="0" Grid.Column="5"
-                        Background="Transparent"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        AutomationProperties.Name="Settings"
-                        ToolTip.Tip="Settings">
-                    <avalonia:FluentIcon Icon="Settings" />
-                </Button>
-
-                <Button Grid.Row="0" Grid.Column="6"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Background="Transparent"
-                        AutomationProperties.Name="Profile"
-                        ToolTip.Tip="Profile">
-                    <avalonia:FluentIcon Icon="Person" />
-                </Button>
-            </Grid>
+            </DockPanel>
         </Border>
         <Border Grid.Row="1"
                 Grid.Column="0"
@@ -87,46 +59,101 @@
                 BorderBrush="Black"
                 BorderThickness="0,0,1,0">
             <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <avalonia:FluentIcon Icon="Board" VerticalAlignment="Center" />
-                    <TextBlock Text="Dashboard" VerticalAlignment="Center" />
+                <StackPanel Margin="5">
+                    <Label Content="Exercises"  FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{Binding Lesson.Exercises}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:Exercise">
+                                <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
+                                    <Button Content="{Binding Title}"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding #root.DataContext.ChangeExerciseCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </StackPanel>
-
-                <Label Content="Lessons" />
             </StackPanel>
         </Border>
         <Border Grid.Row="1"
                 Grid.Column="1">
             <StackPanel>
-                <Border BorderBrush="Black"
-                        BorderThickness="0,0,0,1">
-                    <StackPanel Margin="10">
-                        <ItemsControl ItemsSource="{Binding Characters}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="vm:CharacterViewModel">
-                                    <Border BorderBrush="Black"
-                                            BorderThickness="1"
-                                            Height="40"
-                                            Width="40">
-                                        <TextBlock Text="{Binding Character}"
-                                                   TextDecorations="{Binding IsCurrent, Converter={StaticResource CursorVisibilityConverter}}"
-                                                   Foreground="{Binding IsCorrect, Converter={StaticResource IsCorrectToBrushConverter}}"
-                                                   FontSize="24"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center" />
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </Border>
+                <StackPanel IsVisible="{Binding !IsExerciseFinished}">
+                    <Border BorderBrush="Black"
+                            BorderThickness="0,0,0,1">
+                        <Grid RowDefinitions="*,*" Margin="10">
+                            <StackPanel Grid.Row="0"
+                                        Orientation="Horizontal"
+                                        HorizontalAlignment="Center">
+                                <TextBlock>
+                                    <Run Text="Speed:" FontWeight="Bold" />
+                                    <Run Text="0"/>
+                                </TextBlock>
 
-                <Label Classes="text" Content="Here will be keyboard" />
+                                <TextBlock>
+                                    <Run Text=" Correct: " FontWeight="Bold" />
+                                    <Run Text="{Binding CorrectCount}"/>
+                                </TextBlock>
+
+                                <TextBlock>
+                                    <Run Text=" Errors: " FontWeight="Bold" />
+                                    <Run Text="{Binding ErrorsCount}"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1"
+                                        Margin="10"
+                                        HorizontalAlignment="Center">
+                                <ItemsControl ItemsSource="{Binding Characters}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="vm:CharacterViewModel">
+                                            <Border BorderBrush="Black"
+                                                    BorderThickness="1"
+                                                    Height="40"
+                                                    Width="40">
+                                                <TextBlock Text="{Binding Character}"
+                                                           TextDecorations="{Binding IsCurrent, Converter={StaticResource CursorVisibilityConverter}}"
+                                                           Foreground="{Binding IsCorrect, Converter={StaticResource IsCorrectToBrushConverter}}"
+                                                           FontSize="24"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Label Classes="text" Content="Here will be keyboard" />
+                </StackPanel>
+
+                <StackPanel IsVisible="{Binding IsExerciseFinished}"
+                            Background="Bisque">
+                    <Label Content="The exercise is finished."/>
+                    <TextBlock>
+                        <Run Text="Correct: " />
+                        <Run Text="{Binding CorrectCount}" />
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="Errors: " />
+                        <Run Text="{Binding ErrorsCount}" />
+                    </TextBlock>
+
+                    <Button IsVisible="{Binding HasExercises}"
+                            IsDefault="{Binding HasExercises}"
+                            Content="Next exercise"
+                            Command="{Binding ChangeToNextExerciseCommand}" />
+
+                    <Button IsVisible="{Binding IsLessonFinished}"
+                            Content="Next lesson"
+                            Command="{Binding ChangeLessonToNextCommand}"/>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
