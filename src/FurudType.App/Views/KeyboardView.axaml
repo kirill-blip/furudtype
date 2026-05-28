@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Runtime"
+             xmlns:system="using:System"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:keyboard="using:FurudType.App.ViewModels.Keyboard"
+             x:DataType="vm:KeyboardViewModel"
+             x:Class="FurudType.App.Views.KeyboardView">
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+        <ItemsControl ItemsSource="{Binding Keys}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="system:Array">
+                    <ItemsControl ItemsSource="{Binding .}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="keyboard:KeyItemViewModel">
+                                <Border BorderBrush="Black"
+                                        BorderThickness="1"
+                                        Width="50"
+                                        Height="50"
+                                        Margin="1"
+                                        Background="{Binding IsCurrent, Converter={StaticResource KeyItemConverter}}">
+                                    <Label Content="{Binding DisplayText}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </StackPanel>
+</UserControl>

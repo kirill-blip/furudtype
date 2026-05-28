@@ -7,6 +7,7 @@
     <Application.Resources>
         <conv:IsCorrectToBrushConverter x:Key="IsCorrectToBrushConverter" />
         <conv:CursorVisibilityConverter x:Key="CursorVisibilityConverter" />
+        <conv:KeyItemConverter x:Key="KeyItemConverter" />
     </Application.Resources>
 
     <Application.Styles>

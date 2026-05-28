@@ -8,6 +8,7 @@
         xmlns:i="using:Avalonia.Xaml.Interactivity"
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:local="clr-namespace:FurudType.App.Views"
         x:Class="FurudType.App.Views.MainView"
         x:DataType="vm:MainViewModel"
         x:Name="root"
@@ -130,7 +131,7 @@
                         </Grid>
                     </Border>
 
-                    <Label Classes="text" Content="Here will be keyboard" />
+                    <local:KeyboardView DataContext="{Binding KeyboardViewModel}" />
                 </StackPanel>
 
                 <StackPanel IsVisible="{Binding IsExerciseFinished}"
