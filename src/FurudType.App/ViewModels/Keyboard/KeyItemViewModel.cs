@@ -9,4 +9,7 @@ public partial class KeyItemViewModel : ViewModelBase
 
     [ObservableProperty]
     private bool _isCurrent = false;
+
+    [ObservableProperty]
+    private bool _isHome = false;
 }
