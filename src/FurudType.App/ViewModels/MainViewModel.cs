@@ -17,6 +17,8 @@ public partial class MainViewModel : ViewModelBase
     [ObservableProperty]
     private ObservableCollection<CharacterViewModel> _characters = [];
 
+    public KeyboardViewModel KeyboardViewModel { get; private set; }
+
     [ObservableProperty]
     private Lesson _lesson;
 
@@ -59,6 +61,9 @@ public partial class MainViewModel : ViewModelBase
         }
 
         Characters[0].IsCurrent = true;
+
+        KeyboardViewModel = new KeyboardViewModel();
+        KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
     }
 
     [RelayCommand]
@@ -101,10 +106,12 @@ public partial class MainViewModel : ViewModelBase
                 if (_currentIndex >= Characters.Count)
                 {
                     Characters[^1].IsCurrent = true;
+                    KeyboardViewModel.ChangeKeyItem(Characters[^1].Character);
                 }
                 else
                 {
                     Characters[_currentIndex].IsCurrent = true;
+                    KeyboardViewModel.ChangeKeyItem(Characters[_currentIndex].Character);
                 }
 
                 continue;
@@ -128,10 +135,12 @@ public partial class MainViewModel : ViewModelBase
             if (_currentIndex >= Characters.Count)
             {
                 Characters[^1].IsCurrent = true;
+                KeyboardViewModel.ChangeKeyItem(Characters[^1].Character);
             }
             else
             {
                 Characters[_currentIndex].IsCurrent = true;
+                KeyboardViewModel.ChangeKeyItem(Characters[_currentIndex].Character);
             }
         }
 
@@ -161,12 +170,17 @@ public partial class MainViewModel : ViewModelBase
 
         foreach (char character in exercise.Text)
         {
-            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
+            CharacterViewModel characterViewModel = new()
+            {
+                Character = character,
+                IsCurrent = false
+            };
 
             Characters.Add(characterViewModel);
         }
 
         Characters[0].IsCurrent = true;
+        KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
     }
 
     [RelayCommand]
@@ -199,6 +213,7 @@ public partial class MainViewModel : ViewModelBase
         }
 
         Characters[0].IsCurrent = true;
+        KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
     }
 
     [RelayCommand]
@@ -232,5 +247,6 @@ public partial class MainViewModel : ViewModelBase
         }
 
         Characters[0].IsCurrent = true;
+        KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
     }
 }
