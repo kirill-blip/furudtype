@@ -9,6 +9,7 @@ namespace FurudType.App.Converters;
 public class KeyItemConverter : IValueConverter
 {
     private IBrush CurrentKeyBrush { get; } = Brushes.LimeGreen;
+    private IBrush IncorrectKeyBrush { get; } = Brushes.Red;
     private IBrush DefaultKeyBrush { get; } = Brushes.AliceBlue;
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)

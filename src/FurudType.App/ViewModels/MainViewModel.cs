@@ -89,6 +89,7 @@ public partial class MainViewModel : ViewModelBase
             if (inputChar != Characters[_currentIndex].Character)
             {
                 ErrorsCount++;
+                KeyboardViewModel.VizualizeIncorrectKey(inputChar);
                 continue;
             }
 
