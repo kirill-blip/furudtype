@@ -45,7 +45,7 @@ public partial class MainViewModel : ViewModelBase
 
     private readonly ILessonRepository _lessonRepository;
 
-    public MainViewModel(ILessonRepository lessonRepository)
+    public MainViewModel(ILessonRepository lessonRepository, KeyboardViewModel keyboardViewModel)
     {
         _lessonRepository = lessonRepository;
         _lessons = _lessonRepository.GetAll();
@@ -62,7 +62,7 @@ public partial class MainViewModel : ViewModelBase
 
         Characters[0].IsCurrent = true;
 
-        KeyboardViewModel = new KeyboardViewModel();
+        KeyboardViewModel = keyboardViewModel;
         KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
     }
 
@@ -86,50 +86,21 @@ public partial class MainViewModel : ViewModelBase
                 break;
             }
 
+            if (inputChar != Characters[_currentIndex].Character)
+            {
+                ErrorsCount++;
+                continue;
+            }
+
             if (inputChar == ' ' && Characters[_currentIndex].Character != ' ')
             {
                 return;
             }
 
-            if (inputChar != ' ' && Characters[_currentIndex].Character == ' ')
-            {
-                return;
-            }
-
-            if (inputChar == ' ' && Characters[_currentIndex].Character == ' ')
-            {
-                Characters[_currentIndex].IsCurrent = false;
-                Characters[_currentIndex].IsCorrect = true;
-
-                _currentIndex++;
-
-                if (_currentIndex >= Characters.Count)
-                {
-                    Characters[^1].IsCurrent = true;
-                    KeyboardViewModel.ChangeKeyItem(Characters[^1].Character);
-                }
-                else
-                {
-                    Characters[_currentIndex].IsCurrent = true;
-                    KeyboardViewModel.ChangeKeyItem(Characters[_currentIndex].Character);
-                }
-
-                continue;
-            }
-
-            if (Characters[_currentIndex].Character != inputChar)
-            {
-                ErrorsCount++;
-                Characters[_currentIndex].IsCorrect = false;
-            }
-            else
-            {
-                CorrectCount++;
-
-                Characters[_currentIndex].IsCorrect = true;
-            }
-
+            Characters[_currentIndex].IsCorrect = true;
             Characters[_currentIndex].IsCurrent = false;
+
+            CorrectCount++;
             _currentIndex++;
 
             if (_currentIndex >= Characters.Count)
