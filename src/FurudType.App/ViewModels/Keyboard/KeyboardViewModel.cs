@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -66,6 +67,16 @@ public partial class KeyboardViewModel : ViewModelBase
         {
             _currentKey = keyItem;
             _currentKey.IsCurrent = true;
+        }
+    }
+
+    public void VizualizeIncorrectKey(char key)
+    {
+        KeyItemViewModel? keyItem = FindKeyItem(key.ToString());
+
+        if (keyItem != null)
+        {
+            keyItem.IsIncorrectKey = true;
         }
     }
 }

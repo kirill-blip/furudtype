@@ -31,7 +31,7 @@
                                         Height="50"
                                         Margin="1"
                                         CornerRadius="10"
-                                        Background="{Binding IsCurrent, Converter={StaticResource KeyItemConverter}}">
+                                        Background="{Binding BackgroundBrush}">
                                     <TextBlock Text="{Binding DisplayText}"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"
