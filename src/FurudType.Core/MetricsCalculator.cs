@@ -10,12 +10,12 @@ public class MetricsCalculator
 
     public int CalculateCRM(int currentIndex, TimeSpan elapsedTime)
     {
-        if (elapsedTime.Seconds == 0 || currentIndex == 0)
+        if (elapsedTime.TotalSeconds <= 0 || currentIndex == 0)
         {
             return 0;
         }
 
-        double result = (double)currentIndex / elapsedTime.Seconds * 60;
+        double result = (double)currentIndex / elapsedTime.TotalSeconds * 60.0;
 
         return (int)Math.Round(result);
     }

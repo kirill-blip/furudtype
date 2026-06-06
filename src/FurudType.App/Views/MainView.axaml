@@ -20,6 +20,11 @@
                                     PassEventArgsToCommand="True" />
         </ia:EventTriggerBehavior>
     </i:Interaction.Behaviors>
+
+    <Design.DataContext>
+        <vm:MainViewModel/>
+    </Design.DataContext>
+
     <Grid RowDefinitions="Auto,*"
           ColumnDefinitions="Auto,*">
         <Border Grid.Row="0"
@@ -88,18 +93,18 @@
                                         Orientation="Horizontal"
                                         HorizontalAlignment="Center">
                                 <TextBlock>
-                                    <Run Text="Speed:" FontWeight="Bold" />
-                                    <Run Text="0"/>
+                                    <Run Text="CPM:" FontWeight="Bold" />
+                                    <Run Text="{Binding Cpm}"/>
                                 </TextBlock>
 
                                 <TextBlock>
-                                    <Run Text=" Correct: " FontWeight="Bold" />
-                                    <Run Text="{Binding CorrectCount}"/>
+                                    <Run Text=" Accurancy: " FontWeight="Bold" />
+                                    <Run Text="{Binding Accurancy}"/><Run Text="%" />
                                 </TextBlock>
 
                                 <TextBlock>
                                     <Run Text=" Errors: " FontWeight="Bold" />
-                                    <Run Text="{Binding ErrorsCount}"/>
+                                    <Run Text="{Binding Errors}"/>
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel Grid.Row="1"
@@ -138,12 +143,16 @@
                             Background="Bisque">
                     <Label Content="The exercise is finished."/>
                     <TextBlock>
-                        <Run Text="Correct: " />
-                        <Run Text="{Binding CorrectCount}" />
+                        <Run Text="CPM: " />
+                        <Run Text="{Binding FinalCpm}" />
+                    </TextBlock>
+                    <TextBlock>
+                        <Run Text="Accurancy: " />
+                        <Run Text="{Binding Accurancy}" /><Run Text="%" />
                     </TextBlock>
                     <TextBlock>
                         <Run Text="Errors: " />
-                        <Run Text="{Binding ErrorsCount}" />
+                        <Run Text="{Binding Errors}" />
                     </TextBlock>
 
                     <Button IsVisible="{Binding HasExercises}"

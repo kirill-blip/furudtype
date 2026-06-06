@@ -4,6 +4,7 @@ using Avalonia.Markup.Xaml;
 
 using FurudType.App.ViewModels;
 using FurudType.App.Views;
+using FurudType.Core;
 using FurudType.Core.Repositories;
 using FurudType.Storage;
 
@@ -21,8 +22,11 @@ public partial class App : Application
     public override void OnFrameworkInitializationCompleted()
     {
         var collection = new ServiceCollection();
+
         collection.AddScoped<MainViewModel>();
         collection.AddScoped<KeyboardViewModel>();
+        collection.AddScoped<MetricsCalculator>();
+
         collection.AddScoped<ILessonRepository, InMemoryLessonRepository>();
 
         var services = collection.BuildServiceProvider();

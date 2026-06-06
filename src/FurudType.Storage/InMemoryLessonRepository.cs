@@ -11,12 +11,13 @@ public class InMemoryLessonRepository : ILessonRepository
     {
         Exercise firstExercise = new Exercise() { Text = "fdfd fdfd fdfd fdfd", Title = "First" };
         Exercise secondExercise = new Exercise() { Text = "dkdk dkdk dkdk dkdk", Title = "Second" };
+        Exercise fifthExercise = new Exercise() { Text = "Hello, World! It's the longest sentense in", Title = "Fourth" };
         
         var lesson = new Lesson()
         {
             Title = "First"
         };
-        lesson.Exercises.AddRange([firstExercise, secondExercise]);
+        lesson.Exercises.AddRange([firstExercise, secondExercise,fifthExercise]);
 
         Exercise thirdExercise = new Exercise() { Text = "slsl slsl slsl slsl", Title = "Third" };
         Exercise fourthExercise = new Exercise() { Text = "a;a; a;a; a;a; a;a;", Title = "Fourth" };

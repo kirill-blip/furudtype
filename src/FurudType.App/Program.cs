@@ -23,11 +23,12 @@ class Program
             .UsePlatformDetect()
             .WithInterFont()
             .LogToTrace();
-
+#if DEBUG
         if (!Design.IsDesignMode)
         {
             app.UseHotReload();
         }
+#endif
 
         return app;
     }
