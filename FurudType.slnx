@@ -1,5 +1,5 @@
 <Solution>
-  <Folder Name="/tests/">
+  <Folder Name="/Tests/">
     <Project Path="tests/FurudType.Core.Tests/FurudType.Core.Tests.csproj" Id="c94bd1d7-51fb-44a9-b38c-ca21f53d26e2" />
   </Folder>
   <Project Path="src/FurudType.App/FurudType.App.csproj" />

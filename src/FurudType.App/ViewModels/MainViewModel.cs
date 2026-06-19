@@ -17,15 +17,16 @@ namespace FurudType.App.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private const double CpmDisplayThresholdSeconds = 0; // можно оставить 0 или >0 для задержки показа
+    private const double CpmDisplayThresholdSeconds = 0;
     private const double IdleThresholdSeconds = 0.5;
-    private const double DecayRatePerSecond = 30.0; // уменьшение CPM в секунду при простое
+    private const double DecayRatePerSecond = 30.0;
     private const int TimerIntervalMs = 250;
 
-    // сглаживание CPM (экспоненциальное скользящее среднее)
     private double _cpmSmoothed = 0.0;
-    private const double CpmSmoothingAlpha = 0.25; // 0..1 — чем меньше, тем сильнее сглаживание
-    private const double MinElapsedSecondsForDisplay = 0.15; // минимальный безопасный промежуток для расчёта
+    private const double CpmSmoothingAlpha = 0.25;
+    private const double MinElapsedSecondsForDisplay = 0.2;
+    private const double MinElapsedSecondsForStable = 0.6;
+    private const int MaxCpmInitial = 0;
 
     [ObservableProperty]
     private ObservableCollection<CharacterViewModel> _characters = [];
@@ -207,13 +208,22 @@ public partial class MainViewModel : ViewModelBase
             {
                 double measured = calculated;
 
+                double alpha = elapsed.TotalSeconds < MinElapsedSecondsForStable
+                    ? 0.08 
+                    : CpmSmoothingAlpha;
+
+                if (elapsed.TotalSeconds < MinElapsedSecondsForStable)
+                {
+                    measured = Math.Min(measured, MaxCpmInitial);
+                }
+
                 if (_cpmSmoothed <= 0.0)
                 {
                     _cpmSmoothed = measured;
                 }
                 else
                 {
-                    _cpmSmoothed = _cpmSmoothed * (1.0 - CpmSmoothingAlpha) + measured * CpmSmoothingAlpha;
+                    _cpmSmoothed = _cpmSmoothed * (1.0 - alpha) + measured * alpha;
                 }
 
                 Cpm = (int)Math.Round(_cpmSmoothed);
