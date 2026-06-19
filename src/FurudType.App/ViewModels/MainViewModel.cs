@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Timers;
 
 using Avalonia.Input;
+using Avalonia.Threading;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+using FurudType.Core;
 using FurudType.Core.Models;
 using FurudType.Core.Repositories;
 
@@ -14,6 +17,17 @@ namespace FurudType.App.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
+    private const double CpmDisplayThresholdSeconds = 0;
+    private const double IdleThresholdSeconds = 0.5;
+    private const double DecayRatePerSecond = 30.0;
+    private const int TimerIntervalMs = 250;
+
+    private double _cpmSmoothed = 0.0;
+    private const double CpmSmoothingAlpha = 0.25;
+    private const double MinElapsedSecondsForDisplay = 0.2;
+    private const double MinElapsedSecondsForStable = 0.6;
+    private const int MaxCpmInitial = 0;
+
     [ObservableProperty]
     private ObservableCollection<CharacterViewModel> _characters = [];
 
@@ -23,17 +37,23 @@ public partial class MainViewModel : ViewModelBase
     private Lesson _lesson;
 
     [ObservableProperty]
-    private int _errorsCount;
-
-    [ObservableProperty]
-    private int _correctCount;
-
-    [ObservableProperty]
     private bool _isExerciseFinished = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(HasExercises))]
     private bool _isLessonFinished = false;
+
+    [ObservableProperty]
+    private int _accurancy = 100;
+
+    [ObservableProperty]
+    private int _errors = 0;
+
+    [ObservableProperty]
+    private int _cpm = 0;
+
+    [ObservableProperty]
+    private int _finalCpm = 0;
 
     public bool HasExercises => !IsLessonFinished;
 
@@ -43,11 +63,24 @@ public partial class MainViewModel : ViewModelBase
 
     private int _currentIndex;
 
+    private int _totalPressedKeys;
+
+    private readonly MetricsCalculator _metricsCalculator;
+
     private readonly ILessonRepository _lessonRepository;
 
-    public MainViewModel(ILessonRepository lessonRepository, KeyboardViewModel keyboardViewModel)
+    private DateTime? _exerciseStartTime;
+
+    private DateTime? _lastInputTime;
+    private DateTime _lastDecayUpdate;
+    private readonly Timer _idleTimer;
+
+    public MainViewModel(ILessonRepository lessonRepository,
+                         KeyboardViewModel keyboardViewModel,
+                         MetricsCalculator metricsCalculator)
     {
         _lessonRepository = lessonRepository;
+        _metricsCalculator = metricsCalculator;
         _lessons = _lessonRepository.GetAll();
         Lesson = _lessons[0];
 
@@ -64,6 +97,48 @@ public partial class MainViewModel : ViewModelBase
 
         KeyboardViewModel = keyboardViewModel;
         KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
+
+        _idleTimer = new Timer(TimerIntervalMs);
+        _idleTimer.Elapsed += OnIdleTimerElapsed;
+        _idleTimer.AutoReset = true;
+        _idleTimer.Start();
+    }
+
+    private void OnIdleTimerElapsed(object? sender, ElapsedEventArgs e)
+    {
+        if (!_lastInputTime.HasValue)
+        {
+            return;
+        }
+
+        var now = DateTime.UtcNow;
+        var idle = (now - _lastInputTime.Value).TotalSeconds;
+        if (idle < IdleThresholdSeconds)
+        {
+            return;
+        }
+
+        var delta = (now - _lastDecayUpdate).TotalSeconds;
+        if (delta <= 0)
+        {
+            _lastDecayUpdate = now;
+            return;
+        }
+
+        var decrement = (int)Math.Round(DecayRatePerSecond * delta);
+        if (decrement <= 0)
+        {
+            _lastDecayUpdate = now;
+            return;
+        }
+
+        Dispatcher.UIThread.Post(() =>
+        {
+            _cpmSmoothed = Math.Max(0.0, _cpmSmoothed - decrement);
+            Cpm = (int)Math.Round(_cpmSmoothed);
+        });
+
+        _lastDecayUpdate = now;
     }
 
     [RelayCommand]
@@ -79,6 +154,15 @@ public partial class MainViewModel : ViewModelBase
             return;
         }
 
+        _lastInputTime = DateTime.UtcNow;
+        _lastDecayUpdate = _lastInputTime.Value;
+
+        _totalPressedKeys++;
+        if (_totalPressedKeys == 1)
+        {
+            _exerciseStartTime = DateTime.UtcNow;
+        }
+
         foreach (char inputChar in e.Text)
         {
             if (_currentIndex >= Characters.Count)
@@ -88,20 +172,14 @@ public partial class MainViewModel : ViewModelBase
 
             if (inputChar != Characters[_currentIndex].Character)
             {
-                ErrorsCount++;
+                Errors++;
                 KeyboardViewModel.VizualizeIncorrectKey(inputChar);
                 continue;
-            }
-
-            if (inputChar == ' ' && Characters[_currentIndex].Character != ' ')
-            {
-                return;
             }
 
             Characters[_currentIndex].IsCorrect = true;
             Characters[_currentIndex].IsCurrent = false;
 
-            CorrectCount++;
             _currentIndex++;
 
             if (_currentIndex >= Characters.Count)
@@ -116,8 +194,55 @@ public partial class MainViewModel : ViewModelBase
             }
         }
 
+        Accurancy = (int)_metricsCalculator.CalculateAccurancy(_currentIndex, _totalPressedKeys);
+
+        if (_exerciseStartTime.HasValue)
+        {
+            TimeSpan elapsed = DateTime.UtcNow - _exerciseStartTime.Value;
+            int calculated = _metricsCalculator.CalculateCRM(_currentIndex, elapsed);
+
+            if (elapsed.TotalSeconds >= CpmDisplayThresholdSeconds
+                && _currentIndex > 0
+                && _totalPressedKeys > 1
+                && elapsed.TotalSeconds >= MinElapsedSecondsForDisplay)
+            {
+                double measured = calculated;
+
+                double alpha = elapsed.TotalSeconds < MinElapsedSecondsForStable
+                    ? 0.08 
+                    : CpmSmoothingAlpha;
+
+                if (elapsed.TotalSeconds < MinElapsedSecondsForStable)
+                {
+                    measured = Math.Min(measured, MaxCpmInitial);
+                }
+
+                if (_cpmSmoothed <= 0.0)
+                {
+                    _cpmSmoothed = measured;
+                }
+                else
+                {
+                    _cpmSmoothed = _cpmSmoothed * (1.0 - alpha) + measured * alpha;
+                }
+
+                Cpm = (int)Math.Round(_cpmSmoothed);
+            }
+            else
+            {
+                _cpmSmoothed = 0.0;
+                Cpm = 0;
+            }
+        }
+        else
+        {
+            _cpmSmoothed = 0.0;
+            Cpm = 0;
+        }
+
         if (_currentIndex == Characters.Count)
         {
+            FinalCpm = Cpm;
             IsExerciseFinished = true;
 
             int index = Lesson.Exercises.IndexOf(_currentExercise);
@@ -133,12 +258,20 @@ public partial class MainViewModel : ViewModelBase
     {
         Characters.Clear();
         _currentExercise = exercise;
-
+        _totalPressedKeys = 0;
         IsExerciseFinished = false;
         IsLessonFinished = false;
         _currentIndex = 0;
-        CorrectCount = 0;
-        ErrorsCount = 0;
+
+        Errors = 0;
+        Accurancy = 100;
+
+        _exerciseStartTime = null;
+        Cpm = 0;
+        _cpmSmoothed = 0.0;
+
+        _lastInputTime = null;
+        _lastDecayUpdate = DateTime.UtcNow;
 
         foreach (char character in exercise.Text)
         {
@@ -168,10 +301,17 @@ public partial class MainViewModel : ViewModelBase
         Characters.Clear();
 
         IsExerciseFinished = false;
+        _totalPressedKeys = 0;
         _currentExercise = Lesson.Exercises[index + 1];
         _currentIndex = 0;
-        CorrectCount = 0;
-        ErrorsCount = 0;
+        Errors = 0;
+        Accurancy = 100;
+        _exerciseStartTime = null;
+        Cpm = 0;
+        _cpmSmoothed = 0.0;
+
+        _lastInputTime = null;
+        _lastDecayUpdate = DateTime.UtcNow;
 
         foreach (char character in _currentExercise.Text)
         {
@@ -198,8 +338,16 @@ public partial class MainViewModel : ViewModelBase
         }
 
         _currentIndex = 0;
-        CorrectCount = 0;
-        ErrorsCount = 0;
+        _totalPressedKeys = 0;
+        Accurancy = 100;
+        Errors = 0;
+
+        _exerciseStartTime = null;
+        Cpm = 0;
+        _cpmSmoothed = 0.0;
+
+        _lastInputTime = null;
+        _lastDecayUpdate = DateTime.UtcNow;
 
         Characters.Clear();
         IsExerciseFinished = false;

@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Tests/">
+    <Project Path="tests/FurudType.Core.Tests/FurudType.Core.Tests.csproj" Id="c94bd1d7-51fb-44a9-b38c-ca21f53d26e2" />
+  </Folder>
   <Project Path="src/FurudType.App/FurudType.App.csproj" />
   <Project Path="src/FurudType.Core/FurudType.Core.csproj" />
   <Project Path="src/FurudType.Storage/FurudType.Storage.csproj" Id="1dfb5a30-8c24-400e-8a32-56d9f7244885" />
