@@ -1,7 +1,7 @@
 # furudtype
 > A cross-platform desktop touch-typing tutor.
 
-[![License](https://img.shields.io/badge/license-MIT-blue)](https://github.com/kirill-blip/furudtype/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-APACHE-blue)](https://github.com/kirill-blip/furudtype/blob/main/LICENSE)
 
 FurudType helps you improve your typing speed and accuracy through structured lessons.
 
