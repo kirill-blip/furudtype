@@ -23,4 +23,4 @@ jobs:
 
       - name: Validate all lessons against schema
         run: |
-          ajv validate -s .github/workflows/schemas/lesson-schema.json -d "src/FurudType.Data/Data/**/*.json"
+          ajv validate -s .github/workflows/schemas/lesson-schema.json -d "src/FurudType.Storage/Data/**/*.json"
