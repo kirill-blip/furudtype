@@ -4,5 +4,5 @@ public class Lesson
 {
     public required string Title { get; init; }
 
-    public List<Exercise> Exercises { get; private set; } = [];
+    public List<Exercise> Exercises { get; init; } = [];
 }

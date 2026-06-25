@@ -13,7 +13,8 @@
         x:DataType="vm:MainViewModel"
         x:Name="root"
         Title="FurudType"
-        Focusable="True">
+        Focusable="True"
+        Loaded="HandlePageLoaded">
     <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="TextInput">
             <ia:InvokeCommandAction Command="{Binding HandleTextInputCommand}"
