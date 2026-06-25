@@ -1,0 +1,67 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FurudType.App.HomePageView"
+             x:DataType="vm:HomePageViewModel">
+    <Design.DataContext>
+        <vm:HomePageViewModel />
+    </Design.DataContext>
+
+    <StackPanel Margin="5">
+        <Grid ColumnDefinitions="*,*"
+              ColumnSpacing="10">
+            <StackPanel Grid.Column="0">
+                <Label>Course</Label>
+                <Border BorderThickness="1"
+                        BorderBrush="Gray"
+                        CornerRadius="5"
+                        Padding="5">
+                    <StackPanel>
+                        <Label>English (QWERTY) - Begginer</Label>
+                        <Label>Lesson: Middle fingers</Label>
+                        <Label>Exercise: dldl</Label>
+                        <Button HorizontalAlignment="Right">Continue</Button>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <Label>Avaible courses</Label>
+
+                <StackPanel Spacing="5">
+                    <Border BorderThickness="1"
+                            BorderBrush="Gray"
+                            CornerRadius="5"
+                            Padding="5">
+                        <StackPanel>
+                            <Label>English (QWERTY) - Advanced</Label>
+                            <Button HorizontalAlignment="Right">Start</Button>
+                        </StackPanel>
+                    </Border>
+
+                    <Border BorderThickness="1"
+                            BorderBrush="Gray"
+                            CornerRadius="5"
+                            Padding="5">
+                        <StackPanel>
+                            <Label>English (QWERTY) - Advanced</Label>
+                            <Button HorizontalAlignment="Right">Start</Button>
+                        </StackPanel>
+                    </Border>
+
+                    <Border BorderThickness="1"
+                            BorderBrush="Gray"
+                            CornerRadius="5"
+                            Padding="5">
+                        <StackPanel>
+                            <Label>English (QWERTY) - Advanced</Label>
+                            <Button HorizontalAlignment="Right">Start</Button>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</UserControl>
