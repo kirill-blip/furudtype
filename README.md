@@ -2,6 +2,7 @@
 > A cross-platform desktop touch-typing tutor.
 
 [![Tests](https://github.com/kirill-blip/furudtype/actions/workflows/dotnet-tests.yml/badge.svg)](https://github.com/kirill-blip/furudtype/actions/workflows/dotnet-tests.yml)
+[![JSON Validation](https://github.com/kirill-blip/furudtype/actions/workflows/validate-lessons.yml/badge.svg)](https://github.com/kirill-blip/furudtype/actions/workflows/validate-lessons.yml)
 [![License](https://img.shields.io/badge/license-APACHE-blue)](https://github.com/kirill-blip/furudtype/blob/main/LICENSE)
 
 FurudType helps you improve your typing speed and accuracy through structured lessons.

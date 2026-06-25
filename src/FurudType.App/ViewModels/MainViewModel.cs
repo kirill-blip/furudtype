@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Timers;
 
 using Avalonia.Input;
@@ -34,7 +35,7 @@ public partial class MainViewModel : ViewModelBase
     public KeyboardViewModel KeyboardViewModel { get; private set; }
 
     [ObservableProperty]
-    private Lesson _lesson;
+    private Lesson? _lesson;
 
     [ObservableProperty]
     private bool _isExerciseFinished = false;
@@ -57,9 +58,9 @@ public partial class MainViewModel : ViewModelBase
 
     public bool HasExercises => !IsLessonFinished;
 
-    private readonly List<Lesson> _lessons = [];
+    private List<Lesson> _lessons = [];
 
-    private Exercise _currentExercise;
+    private Exercise? _currentExercise;
 
     private int _currentIndex;
 
@@ -81,27 +82,9 @@ public partial class MainViewModel : ViewModelBase
     {
         _lessonRepository = lessonRepository;
         _metricsCalculator = metricsCalculator;
-        _lessons = _lessonRepository.GetAll();
-        Lesson = _lessons[0];
-
-        _currentExercise = Lesson.Exercises[0];
-
-        foreach (char character in Lesson.Exercises[0].Text)
-        {
-            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
-
-            Characters.Add(characterViewModel);
-        }
-
-        Characters[0].IsCurrent = true;
-
         KeyboardViewModel = keyboardViewModel;
-        KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
 
         _idleTimer = new Timer(TimerIntervalMs);
-        _idleTimer.Elapsed += OnIdleTimerElapsed;
-        _idleTimer.AutoReset = true;
-        _idleTimer.Start();
     }
 
     private void OnIdleTimerElapsed(object? sender, ElapsedEventArgs e)
@@ -368,5 +351,30 @@ public partial class MainViewModel : ViewModelBase
 
         Characters[0].IsCurrent = true;
         KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
+    }
+
+    public async Task LoadLessonsAsync()
+    {
+        _lessons = await _lessonRepository.GetAllAsync();
+
+        Lesson = _lessons[0];
+
+        _currentExercise = Lesson.Exercises[0];
+
+        foreach (char character in Lesson.Exercises[0].Text)
+        {
+            CharacterViewModel characterViewModel = new() { Character = character, IsCurrent = false };
+
+            Characters.Add(characterViewModel);
+        }
+
+        Characters[0].IsCurrent = true;
+
+        
+        KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
+
+        _idleTimer.Elapsed += OnIdleTimerElapsed;
+        _idleTimer.AutoReset = true;
+        _idleTimer.Start();
     }
 }

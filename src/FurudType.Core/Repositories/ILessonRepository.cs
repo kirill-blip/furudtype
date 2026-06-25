@@ -4,5 +4,5 @@ namespace FurudType.Core.Repositories;
 
 public interface ILessonRepository
 {
-    List<Lesson> GetAll();
+    Task<List<Lesson>> GetAllAsync();
 }

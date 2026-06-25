@@ -10,4 +10,13 @@
     <ProjectReference Include="..\FurudType.Core\FurudType.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\en\lesson_01.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Data\en\lesson_02.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

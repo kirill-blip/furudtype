@@ -1,4 +1,7 @@
-﻿using Avalonia;
+﻿using System;
+using System.IO;
+
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
@@ -7,6 +10,7 @@ using FurudType.App.Views;
 using FurudType.Core;
 using FurudType.Core.Repositories;
 using FurudType.Storage;
+using FurudType.Storage.Repositories;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,15 +25,21 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var collection = new ServiceCollection();
+        StorageSettings storageSettings = new StorageSettings()
+        {
+            DataPath = Path.Combine(AppContext.BaseDirectory, "Data", "en"),
+        };
+
+        ServiceCollection collection = new();
 
         collection.AddScoped<MainViewModel>();
         collection.AddScoped<KeyboardViewModel>();
         collection.AddScoped<MetricsCalculator>();
+        collection.AddScoped((x) => storageSettings);
 
-        collection.AddScoped<ILessonRepository, InMemoryLessonRepository>();
+        collection.AddScoped<ILessonRepository, JsonLessonRepository>();
 
-        var services = collection.BuildServiceProvider();
+        ServiceProvider services = collection.BuildServiceProvider();
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

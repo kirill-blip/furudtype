@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Typing Lesson Schema",
+  "type": "object",
+  "properties": {
+    "Title": {
+      "type": "string",
+      "description": "Lesson Title",
+      "minLength": 1
+    },
+    "Exercises": {
+      "type": "array",
+      "description": "List of exercises in this lesson",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Title": {
+            "type": "string",
+            "description": "The name of a specific exercise (e.g. a letter combination)",
+            "minLength": 1
+          },
+          "Text": {
+            "type": "string",
+            "minLength": 5,
+            "description": "Line of text to print"
+          }
+        },
+        "required": ["Title", "Text"]
+      }
+    }
+  },
+  "required": ["Title", "Exercises"]
+}
