@@ -1,35 +1,19 @@
 <Window xmlns="https://github.com/avaloniaui"
+        xmlns:avalonia="using:FluentIcons.Avalonia"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:vm="clr-namespace:FurudType.App.ViewModels"
         xmlns:models="clr-namespace:FurudType.Core.Models;assembly=FurudType.Core"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         xmlns:local="clr-namespace:FurudType.App.Views"
         x:Class="FurudType.App.Views.MainView"
         x:DataType="vm:MainViewModel"
         x:Name="root"
         Title="FurudType"
-        Focusable="True"
-        Loaded="HandlePageLoaded">
-    <i:Interaction.Behaviors>
-        <ia:EventTriggerBehavior EventName="TextInput">
-            <ia:InvokeCommandAction Command="{Binding HandleTextInputCommand}"
-                                    PassEventArgsToCommand="True" />
-        </ia:EventTriggerBehavior>
-    </i:Interaction.Behaviors>
-
-    <Design.DataContext>
-        <vm:MainViewModel/>
-    </Design.DataContext>
-
-    <Grid RowDefinitions="Auto,*"
-          ColumnDefinitions="Auto,*">
+        Focusable="True">
+    <Grid RowDefinitions="Auto,*">
         <Border Grid.Row="0"
-                Grid.ColumnSpan="2"
                 Padding="5"
                 BorderBrush="Black"
                 BorderThickness="0,0,0,1">
@@ -60,112 +44,7 @@
                            VerticalAlignment="Center" />
             </DockPanel>
         </Border>
-        <Border Grid.Row="1"
-                Grid.Column="0"
-                Width="125"
-                BorderBrush="Black"
-                BorderThickness="0,0,1,0">
-            <StackPanel>
-                <StackPanel Margin="5">
-                    <Label Content="Exercises"  FontWeight="Bold"/>
-                    <ItemsControl ItemsSource="{Binding Lesson.Exercises}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="models:Exercise">
-                                <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
-                                    <Button Content="{Binding Title}"
-                                            HorizontalAlignment="Stretch"
-                                            Command="{Binding #root.DataContext.ChangeExerciseCommand}"
-                                            CommandParameter="{Binding .}" />
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </StackPanel>
-        </Border>
-        <Border Grid.Row="1"
-                Grid.Column="1">
-            <StackPanel>
-                <StackPanel IsVisible="{Binding !IsExerciseFinished}">
-                    <Border BorderBrush="Black"
-                            BorderThickness="0,0,0,1">
-                        <Grid RowDefinitions="*,*" Margin="10">
-                            <StackPanel Grid.Row="0"
-                                        Orientation="Horizontal"
-                                        HorizontalAlignment="Center">
-                                <TextBlock>
-                                    <Run Text="CPM:" FontWeight="Bold" />
-                                    <Run Text="{Binding Cpm}"/>
-                                </TextBlock>
 
-                                <TextBlock>
-                                    <Run Text=" Accurancy: " FontWeight="Bold" />
-                                    <Run Text="{Binding Accurancy}"/><Run Text="%" />
-                                </TextBlock>
-
-                                <TextBlock>
-                                    <Run Text=" Errors: " FontWeight="Bold" />
-                                    <Run Text="{Binding Errors}"/>
-                                </TextBlock>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1"
-                                        Margin="10"
-                                        HorizontalAlignment="Center">
-                                <ItemsControl ItemsSource="{Binding Characters}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="vm:CharacterViewModel">
-                                            <Border BorderBrush="Black"
-                                                    BorderThickness="1"
-                                                    Height="40"
-                                                    Width="40">
-                                                <TextBlock Text="{Binding Character}"
-                                                           TextDecorations="{Binding IsCurrent, Converter={StaticResource CursorVisibilityConverter}}"
-                                                           Foreground="{Binding IsCorrect, Converter={StaticResource IsCorrectToBrushConverter}}"
-                                                           FontSize="24"
-                                                           HorizontalAlignment="Center"
-                                                           VerticalAlignment="Center" />
-                                            </Border>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
-
-                    <local:KeyboardView DataContext="{Binding KeyboardViewModel}" />
-                </StackPanel>
-
-                <StackPanel IsVisible="{Binding IsExerciseFinished}"
-                            Background="Bisque">
-                    <Label Content="The exercise is finished."/>
-                    <TextBlock>
-                        <Run Text="CPM: " />
-                        <Run Text="{Binding FinalCpm}" />
-                    </TextBlock>
-                    <TextBlock>
-                        <Run Text="Accurancy: " />
-                        <Run Text="{Binding Accurancy}" /><Run Text="%" />
-                    </TextBlock>
-                    <TextBlock>
-                        <Run Text="Errors: " />
-                        <Run Text="{Binding Errors}" />
-                    </TextBlock>
-
-                    <Button IsVisible="{Binding HasExercises}"
-                            IsDefault="{Binding HasExercises}"
-                            Content="Next exercise"
-                            Command="{Binding ChangeToNextExerciseCommand}" />
-
-                    <Button IsVisible="{Binding IsLessonFinished}"
-                            Content="Next lesson"
-                            Command="{Binding ChangeLessonToNextCommand}"/>
-                </StackPanel>
-            </StackPanel>
-        </Border>
+        <ContentControl Grid.Row="1" Content="{Binding CurrentPage}" />
     </Grid>
 </Window>

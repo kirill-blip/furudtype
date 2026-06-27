@@ -21,6 +21,8 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+
+        DataTemplates.Add(new ViewLocator());
     }
 
     public override void OnFrameworkInitializationCompleted()
@@ -35,6 +37,7 @@ public partial class App : Application
         collection.AddScoped<MainViewModel>();
         collection.AddScoped<KeyboardViewModel>();
         collection.AddScoped<MetricsCalculator>();
+        collection.AddScoped<LesssonViewModel>();
         collection.AddScoped((x) => storageSettings);
 
         collection.AddScoped<ILessonRepository, JsonLessonRepository>();
