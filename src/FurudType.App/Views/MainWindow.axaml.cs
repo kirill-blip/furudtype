@@ -2,9 +2,9 @@
 
 namespace FurudType.App.Views;
 
-public partial class MainView : Window
+public partial class MainWindow : Window
 {
-    public MainView()
+    public MainWindow()
     {
         InitializeComponent();
     }

@@ -2,12 +2,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+             xmlns:vm="clr-namespace:FurudType.App.ViewModels.Pages"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="FurudType.App.HomePageView"
-             x:DataType="vm:HomePageViewModel">
+             x:Class="FurudType.App.Views.Pages.HomeView"
+             x:DataType="vm:HomeViewModel">
     <Design.DataContext>
-        <vm:HomePageViewModel />
+        <vm:HomeViewModel />
     </Design.DataContext>
 
     <StackPanel Margin="5">
@@ -23,7 +23,10 @@
                         <Label>English (QWERTY) - Begginer</Label>
                         <Label>Lesson: Middle fingers</Label>
                         <Label>Exercise: dldl</Label>
-                        <Button HorizontalAlignment="Right">Continue</Button>
+                        <Button HorizontalAlignment="Right"
+                                Command="{Binding GoToCourseCommand}">
+                            Continue
+                        </Button>
                     </StackPanel>
                 </Border>
             </StackPanel>

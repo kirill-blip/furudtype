@@ -14,9 +14,9 @@ using FurudType.Core;
 using FurudType.Core.Models;
 using FurudType.Core.Repositories;
 
-namespace FurudType.App.ViewModels;
+namespace FurudType.App.ViewModels.Pages;
 
-public partial class LesssonViewModel : ViewModelBase
+public partial class LessonViewModel : ViewModelBase
 {
     private const double CpmDisplayThresholdSeconds = 0;
     private const double IdleThresholdSeconds = 0.5;
@@ -76,7 +76,7 @@ public partial class LesssonViewModel : ViewModelBase
     private DateTime _lastDecayUpdate;
     private readonly Timer _idleTimer;
 
-    public LesssonViewModel(ILessonRepository lessonRepository,
+    public LessonViewModel(ILessonRepository lessonRepository,
                          KeyboardViewModel keyboardViewModel,
                          MetricsCalculator metricsCalculator)
     {

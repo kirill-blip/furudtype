@@ -7,11 +7,12 @@
              xmlns:i="using:Avalonia.Xaml.Interactivity"
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-             xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+             xmlns:vm="clr-namespace:FurudType.App.ViewModels.Pages"
+             xmlns:vmlocal="clr-namespace:FurudType.App.ViewModels"
              xmlns:local="clr-namespace:FurudType.App.Views"
-             x:Class="FurudType.App.Views.LessonView"
+             x:Class="FurudType.App.Views.Pages.LessonView"
              x:Name="root"
-             x:DataType="vm:LesssonViewModel"
+             x:DataType="vm:LessonViewModel"
              Loaded="HandlePageLoaded">
     <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="TextInput">
@@ -21,7 +22,7 @@
     </i:Interaction.Behaviors>
 
     <Design.DataContext>
-        <vm:MainViewModel/>
+        <vm:LessonViewModel />
     </Design.DataContext>
 
     <Grid ColumnDefinitions="Auto,*">
@@ -81,7 +82,7 @@
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="vm:CharacterViewModel">
+                                        <DataTemplate x:DataType="vmlocal:CharacterViewModel">
                                             <Border BorderBrush="Black"
                                                     BorderThickness="1"
                                                     Height="40"

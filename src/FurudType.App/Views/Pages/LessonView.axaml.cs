@@ -1,8 +1,8 @@
 ﻿using Avalonia.Controls;
 
-using FurudType.App.ViewModels;
+using FurudType.App.ViewModels.Pages;
 
-namespace FurudType.App.Views;
+namespace FurudType.App.Views.Pages;
 
 public partial class LessonView : UserControl
 {
@@ -13,7 +13,7 @@ public partial class LessonView : UserControl
 
     private async void HandlePageLoaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (DataContext is LesssonViewModel viewModel)
+        if (DataContext is LessonViewModel viewModel)
         {
             await viewModel.LoadLessonsAsync();
         }

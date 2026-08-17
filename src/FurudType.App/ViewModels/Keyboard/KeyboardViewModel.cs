@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -32,7 +31,7 @@ public partial class KeyboardViewModel : ViewModelBase
             var rowKeys = rowText.Select(ch => new KeyItemViewModel
             {
                 DisplayText = ch.ToString().ToUpper(),
-                IsHome = ch == 'F' || ch== 'J',
+                IsHome = ch == 'F' || ch == 'J',
             }).ToArray();
 
             generatedRows.Add(rowKeys);

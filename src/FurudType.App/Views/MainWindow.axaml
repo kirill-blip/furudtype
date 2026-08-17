@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:avalonia="using:FluentIcons.Avalonia"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:vm="clr-namespace:FurudType.App.ViewModels"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:local="clr-namespace:FurudType.App.Views"
+        x:Class="FurudType.App.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        x:Name="root"
+        Title="FurudType"
+        Focusable="True">
+    <Design.DataContext>
+        <vm:MainWindowViewModel />
+    </Design.DataContext>
+
+    <TransitioningContentControl Content="{Binding CurrentPage}">
+        <TransitioningContentControl.PageTransition>
+            <CrossFade Duration="0:0:0.1"/>
+        </TransitioningContentControl.PageTransition>
+    </TransitioningContentControl>
+</Window>

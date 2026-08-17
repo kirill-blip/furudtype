@@ -26,8 +26,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\MainView.axaml.cs">
-      <DependentUpon>MainView.axaml</DependentUpon>
+    <Compile Update="Views\Pages\HomeView.axaml.cs">
+      <DependentUpon>HomeView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
