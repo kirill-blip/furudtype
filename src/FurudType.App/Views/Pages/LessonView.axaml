@@ -11,7 +11,7 @@
              xmlns:vmlocal="clr-namespace:FurudType.App.ViewModels"
              xmlns:local="clr-namespace:FurudType.App.Views"
              x:Class="FurudType.App.Views.Pages.LessonView"
-             x:Name="root"
+             x:Name="Root"
              x:DataType="vm:LessonViewModel"
              Loaded="HandlePageLoaded">
     <i:Interaction.Behaviors>
@@ -39,7 +39,7 @@
                                 <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
                                     <Button Content="{Binding Title}"
                                             HorizontalAlignment="Stretch"
-                                            Command="{Binding #root.DataContext.ChangeExerciseCommand}"
+                                            Command="{Binding #Root.DataContext.ChangeExerciseCommand}"
                                             CommandParameter="{Binding .}" />
                                 </Border>
                             </DataTemplate>

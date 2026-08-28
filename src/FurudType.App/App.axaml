@@ -11,13 +11,19 @@
     </Application.DataTemplates>
 
     <Application.Resources>
-        <conv:IsCorrectToBrushConverter x:Key="IsCorrectToBrushConverter" />
-        <conv:CursorVisibilityConverter x:Key="CursorVisibilityConverter" />
-        <conv:KeyItemConverter x:Key="KeyItemConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://FurudType.App/Styles/Theme.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <conv:IsCorrectToBrushConverter x:Key="IsCorrectToBrushConverter" />
+            <conv:CursorVisibilityConverter x:Key="CursorVisibilityConverter" />
+            <conv:KeyItemConverter x:Key="KeyItemConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.Styles>
         <FluentTheme />
         <StyleInclude Source="avares://FurudType.App/Styles/AppDefaultStyles.axaml"></StyleInclude>
+        <StyleInclude Source="avares://FurudType.App/Styles/HomeViewStyles.axaml"></StyleInclude>
     </Application.Styles>
 </Application>
