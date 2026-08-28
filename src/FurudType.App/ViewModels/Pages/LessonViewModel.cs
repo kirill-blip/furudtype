@@ -14,9 +14,9 @@ using FurudType.Core;
 using FurudType.Core.Models;
 using FurudType.Core.Repositories;
 
-namespace FurudType.App.ViewModels;
+namespace FurudType.App.ViewModels.Pages;
 
-public partial class MainViewModel : ViewModelBase
+public partial class LessonViewModel : ViewModelBase
 {
     private const double CpmDisplayThresholdSeconds = 0;
     private const double IdleThresholdSeconds = 0.5;
@@ -76,7 +76,7 @@ public partial class MainViewModel : ViewModelBase
     private DateTime _lastDecayUpdate;
     private readonly Timer _idleTimer;
 
-    public MainViewModel(ILessonRepository lessonRepository,
+    public LessonViewModel(ILessonRepository lessonRepository,
                          KeyboardViewModel keyboardViewModel,
                          MetricsCalculator metricsCalculator)
     {
@@ -192,7 +192,7 @@ public partial class MainViewModel : ViewModelBase
                 double measured = calculated;
 
                 double alpha = elapsed.TotalSeconds < MinElapsedSecondsForStable
-                    ? 0.08 
+                    ? 0.08
                     : CpmSmoothingAlpha;
 
                 if (elapsed.TotalSeconds < MinElapsedSecondsForStable)
@@ -370,7 +370,7 @@ public partial class MainViewModel : ViewModelBase
 
         Characters[0].IsCurrent = true;
 
-        
+
         KeyboardViewModel.ChangeKeyItem(Characters[0].Character);
 
         _idleTimer.Elapsed += OnIdleTimerElapsed;

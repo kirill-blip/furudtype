@@ -10,7 +10,8 @@
              xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
              xmlns:keyboard="using:FurudType.App.ViewModels.Keyboard"
              x:DataType="vm:KeyboardViewModel"
-             x:Class="FurudType.App.Views.KeyboardView">
+             x:Class="FurudType.App.Views.KeyboardView"
+             Focusable="True">
     <StackPanel HorizontalAlignment="Center"
                 VerticalAlignment="Center">
         <ItemsControl ItemsSource="{Binding Keys}">

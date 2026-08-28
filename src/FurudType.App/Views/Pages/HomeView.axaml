@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:FurudType.App.ViewModels.Pages"
+             xmlns:models="clr-namespace:FurudType.App.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="FurudType.App.Views.Pages.HomeView"
+             x:DataType="vm:HomeViewModel">
+    <Design.DataContext>
+        <vm:HomeViewModel />
+    </Design.DataContext>
+    <Grid RowDefinitions="Auto,*">
+        <Border Grid.Row="0"
+                BorderBrush="LightGray"
+                BorderThickness="0,0,0,0.5">
+            <Grid ColumnDefinitions="Auto,*,Auto,*,Auto"
+                  Margin="50,5,50,5">
+                <Label Grid.Column="0"
+                       Content="FurudType"
+                       Foreground="#0F172A"
+                       FontSize="18"
+                       FontWeight="600"
+                       VerticalAlignment="Center" />
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Spacing="10">
+                    <Label Content="Courses"
+                           Foreground="#0F172A"
+                           FontSize="16" />
+
+                    <Label Content="About"
+                           Foreground="#0F172A"
+                           FontSize="16" />
+                </StackPanel>
+                <StackPanel Grid.Column="4"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center">
+                    <Button Content="&#x2699;"
+                            Height="35"
+                            Width="35"
+                            Background="Transparent"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Padding="0" />
+                    <Button Content="&#x1F464;"
+                            Height="35"
+                            Width="35"
+                            Background="Transparent"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Padding="0" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="1"
+                    Margin="50,5,50,5">
+            <StackPanel Spacing="5">
+                <Label Content="ACTIVE TRAINING SESSION" />
+                <Border BorderBrush="LightGray"
+                        BorderThickness="0.5"
+                        CornerRadius="5"
+                        Padding="15">
+                    <StackPanel>
+                        <Label Content="English" />
+                        <Label>
+                            Current Focus: Complex word patterns, bursting speed, and maintaining rhythm across multi-syllabic combinations without breaking flow state.
+                        </Label>
+
+                        <Label Content="Progress" />
+                        <Label Content="42%" />
+                        <ProgressBar Minimum="0"
+                                     Maximum="100"
+                                     Value="42" />
+                        <Button Content="Continue" />
+                        <Label Content="Lesson 14: The Burst Technique" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Spacing="5">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Courses" />
+                    <Label Content="All" />
+                    <Label Content="Beginner" />
+                    <Label Content="Pro" />
+                </StackPanel>
+
+                <UniformGrid Columns="2"
+                             ColumnSpacing="15">
+                    <Border BorderThickness=".5"
+                            BorderBrush="LightGray"
+                            CornerRadius="5"
+                            Padding="5">
+                        <StackPanel>
+                            <Label Content="Basics: Home Row" />
+                            <TextBlock TextWrapping="Wrap"
+                                       LineHeight="22"
+                                       VerticalAlignment="Top"
+                                       Text="Establish pure muscle memory on F, J, and the fundamental home row keys. The foundation of absolute precision." />
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <TextBlock Padding="0"
+                                           VerticalAlignment="Center">
+                                    <Run Text="&#x1F55B;" />
+                                    <Run Text="2h 30m" />
+                                </TextBlock>
+                                <TextBlock Padding="0"
+                                           VerticalAlignment="Center">
+                                    <Run Text="&#x1F4D6;" />
+                                    <Run Text="12 Lessons" />
+                                </TextBlock>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </UniformGrid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

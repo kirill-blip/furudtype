@@ -1,0 +1,120 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style Selector="Border.home-page">
+        <Setter Property="Background" Value="{DynamicResource AppBackgroundBrush}" />
+    </Style>
+
+    <Style Selector="Border.home-course-card">
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusLg}" />
+        <Setter Property="Padding" Value="{StaticResource CardPadding}" />
+    </Style>
+
+    <Style Selector="Border.course-progress-badge">
+        <Setter Property="Width" Value="112" />
+        <Setter Property="Height" Value="112" />
+        <Setter Property="CornerRadius" Value="56" />
+        <Setter Property="Background" Value="{DynamicResource HighlightBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SecondaryBrush}" />
+        <Setter Property="BorderThickness" Value="4" />
+    </Style>
+
+    <Style Selector="Border.today-summary">
+        <Setter Property="Background" Value="{DynamicResource SurfaceSubtleBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMd}" />
+        <Setter Property="Padding" Value="16,12" />
+    </Style>
+
+    <Style Selector="Border.lesson-list">
+        <Setter Property="Background" Value="{DynamicResource SurfaceBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusLg}" />
+    </Style>
+
+    <Style Selector="Border.lesson-row">
+        <Setter Property="Padding" Value="16,12" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="0,0,0,1" />
+    </Style>
+
+    <Style Selector="Border.lesson-row-last">
+        <Setter Property="Padding" Value="16,12" />
+    </Style>
+
+    <Style Selector="Border.lesson-number">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="Background" Value="{DynamicResource SurfaceSubtleBrush}" />
+    </Style>
+
+    <Style Selector="Border.current-lesson-indicator">
+        <Setter Property="Width" Value="4" />
+        <Setter Property="CornerRadius" Value="2" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.home-brand">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.home-title">
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.course-title">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.section-title">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.muted">
+        <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.progress-number">
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+    </Style>
+
+    <Style Selector="TextBlock.lesson-status">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Foreground" Value="{DynamicResource TextMutedBrush}" />
+    </Style>
+
+    <Style Selector="Button.primary-action">
+        <Setter Property="MinHeight" Value="40" />
+        <Setter Property="Padding" Value="20,10" />
+        <Setter Property="Background" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="CornerRadius" Value="{StaticResource RadiusMd}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="Button.primary-action:pointerover /template/ ContentPresenter">
+        <Setter Property="Background" Value="{DynamicResource SecondaryBrush}" />
+    </Style>
+
+    <Style Selector="ProgressBar.home-progress">
+        <Setter Property="Height" Value="6" />
+        <Setter Property="Foreground" Value="{DynamicResource SecondaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource ProgressTrackBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
+</Styles>

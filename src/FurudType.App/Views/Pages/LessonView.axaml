@@ -1,20 +1,19 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:vm="clr-namespace:FurudType.App.ViewModels"
-        xmlns:models="clr-namespace:FurudType.Core.Models;assembly=FurudType.Core"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        xmlns:local="clr-namespace:FurudType.App.Views"
-        x:Class="FurudType.App.Views.MainView"
-        x:DataType="vm:MainViewModel"
-        x:Name="root"
-        Title="FurudType"
-        Focusable="True"
-        Loaded="HandlePageLoaded">
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:models="clr-namespace:FurudType.Core.Models;assembly=FurudType.Core"
+             xmlns:i="using:Avalonia.Xaml.Interactivity"
+             xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
+             xmlns:avalonia="clr-namespace:FluentIcons.Avalonia;assembly=FluentIcons.Avalonia"
+             xmlns:vm="clr-namespace:FurudType.App.ViewModels.Pages"
+             xmlns:vmlocal="clr-namespace:FurudType.App.ViewModels"
+             xmlns:local="clr-namespace:FurudType.App.Views"
+             x:Class="FurudType.App.Views.Pages.LessonView"
+             x:Name="Root"
+             x:DataType="vm:LessonViewModel"
+             Loaded="HandlePageLoaded">
     <i:Interaction.Behaviors>
         <ia:EventTriggerBehavior EventName="TextInput">
             <ia:InvokeCommandAction Command="{Binding HandleTextInputCommand}"
@@ -23,45 +22,11 @@
     </i:Interaction.Behaviors>
 
     <Design.DataContext>
-        <vm:MainViewModel/>
+        <vm:LessonViewModel />
     </Design.DataContext>
 
-    <Grid RowDefinitions="Auto,*"
-          ColumnDefinitions="Auto,*">
-        <Border Grid.Row="0"
-                Grid.ColumnSpan="2"
-                Padding="5"
-                BorderBrush="Black"
-                BorderThickness="0,0,0,1">
-            <DockPanel HorizontalAlignment="Stretch"
-                       LastChildFill="True">
-                <StackPanel DockPanel.Dock="Right" VerticalAlignment="Center" Orientation="Horizontal">
-                    <Button Background="Transparent"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            AutomationProperties.Name="Settings"
-                            ToolTip.Tip="Settings">
-                        <avalonia:FluentIcon Icon="Settings" />
-                    </Button>
-
-                    <Button HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            Background="Transparent"
-                            AutomationProperties.Name="Profile"
-                            ToolTip.Tip="Profile">
-                        <avalonia:FluentIcon Icon="Person" />
-                    </Button>
-                </StackPanel>
-
-                <TextBlock Text="FurudType"
-                           FontWeight="Bold"
-                           FontSize="16"
-                           HorizontalAlignment="Left"
-                           VerticalAlignment="Center" />
-            </DockPanel>
-        </Border>
-        <Border Grid.Row="1"
-                Grid.Column="0"
+    <Grid ColumnDefinitions="Auto,*">
+        <Border Grid.Column="0"
                 Width="125"
                 BorderBrush="Black"
                 BorderThickness="0,0,1,0">
@@ -74,7 +39,7 @@
                                 <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="5">
                                     <Button Content="{Binding Title}"
                                             HorizontalAlignment="Stretch"
-                                            Command="{Binding #root.DataContext.ChangeExerciseCommand}"
+                                            Command="{Binding #Root.DataContext.ChangeExerciseCommand}"
                                             CommandParameter="{Binding .}" />
                                 </Border>
                             </DataTemplate>
@@ -83,8 +48,7 @@
                 </StackPanel>
             </StackPanel>
         </Border>
-        <Border Grid.Row="1"
-                Grid.Column="1">
+        <Border Grid.Column="1">
             <StackPanel>
                 <StackPanel IsVisible="{Binding !IsExerciseFinished}">
                     <Border BorderBrush="Black"
@@ -118,7 +82,7 @@
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
-                                        <DataTemplate x:DataType="vm:CharacterViewModel">
+                                        <DataTemplate x:DataType="vmlocal:CharacterViewModel">
                                             <Border BorderBrush="Black"
                                                     BorderThickness="1"
                                                     Height="40"
@@ -168,4 +132,4 @@
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</UserControl>

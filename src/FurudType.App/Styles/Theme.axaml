@@ -1,0 +1,34 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="using:System">
+    <Color x:Key="SereneBackgroundColor">#E7ECEF</Color>
+    <Color x:Key="SerenePrimaryColor">#274C77</Color>
+    <Color x:Key="SereneSecondaryColor">#6096BA</Color>
+    <Color x:Key="SereneHighlightColor">#A3CEF1</Color>
+    <Color x:Key="SereneNeutralColor">#8B8C89</Color>
+
+    <SolidColorBrush x:Key="AppBackgroundBrush" Color="{StaticResource SereneBackgroundColor}" />
+    <SolidColorBrush x:Key="SurfaceBrush" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="SurfaceSubtleBrush" Color="#F8FAFB" />
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource SerenePrimaryColor}" />
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource SereneSecondaryColor}" />
+    <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource SereneHighlightColor}" />
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource SerenePrimaryColor}" />
+    <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource SereneNeutralColor}" />
+    <SolidColorBrush x:Key="BorderBrush" Color="#D5DEE3" />
+    <SolidColorBrush x:Key="ProgressTrackBrush" Color="#DDE5E9" />
+
+    <sys:Double x:Key="Space1">4</sys:Double>
+    <sys:Double x:Key="Space2">8</sys:Double>
+    <sys:Double x:Key="Space3">12</sys:Double>
+    <sys:Double x:Key="Space4">16</sys:Double>
+    <sys:Double x:Key="Space5">20</sys:Double>
+    <sys:Double x:Key="Space6">24</sys:Double>
+    <sys:Double x:Key="Space8">32</sys:Double>
+    <sys:Double x:Key="Space10">40</sys:Double>
+
+    <Thickness x:Key="PagePadding">32,24</Thickness>
+    <Thickness x:Key="CardPadding">24</Thickness>
+    <CornerRadius x:Key="RadiusMd">8</CornerRadius>
+    <CornerRadius x:Key="RadiusLg">12</CornerRadius>
+</ResourceDictionary>
